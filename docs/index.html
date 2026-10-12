@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BREoS — Engineering Intelligence Platform</title>
+  <meta name="description" content="Showcase e Portfólio de Arquitetura da Plataforma BREoS — Go 1.22 Runtime, 27 Canonical MCP Tools, Level 5 Governance.">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            breos: {
+              DEFAULT: '#4BC51D',
+              light: '#6ee734',
+              dark: '#389a14',
+              glow: 'rgba(75, 197, 29, 0.25)'
+            },
+            darkBg: '#090d16',
+            cardBg: '#121826',
+            borderCol: '#1e293b'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #090d16; color: #f1f5f9; }
+    code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
+    .glow-effect { box-shadow: 0 0 30px rgba(75, 197, 29, 0.2); }
+    .glass { background: rgba(18, 24, 38, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 30%, #4BC51D 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-breos selection:text-black">
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 glass border-b border-borderCol/80 px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-lg bg-breos/20 border border-breos/40 flex items-center justify-center text-breos font-bold font-mono text-xl shadow-lg">
+          B
+        </div>
+        <span class="text-xl font-bold tracking-tight text-white">BREoS <span class="text-xs font-mono uppercase px-2 py-0.5 rounded bg-breos/20 text-breos border border-breos/30">Architecture Showcase</span></span>
+      </div>
+      <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+        <a href="#overview" class="hover:text-breos transition">Visão Geral</a>
+        <a href="#architecture" class="hover:text-breos transition">Arquitetura</a>
+        <a href="#mcp-tools" class="hover:text-breos transition">27 Ferramentas MCP</a>
+        <a href="#budget" class="hover:text-breos transition">Context Budgeting</a>
+        <a href="#metrics" class="hover:text-breos transition">Métricas & Scorecard</a>
+        <a href="./PORTFOLIO_CASE_STUDY.md" class="hover:text-breos transition">Case Study (MD)</a>
+      </div>
+      <div class="flex items-center space-x-3">
+        <a href="https://github.com/BRSmartList/BREosPub" target="_blank" rel="noreferrer" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition flex items-center gap-2">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub Repo
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="overview" class="relative overflow-hidden py-24 px-6 border-b border-borderCol">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(75,197,29,0.12),transparent_50%)]"></div>
+    <div class="max-w-6xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800/80 border border-slate-700 text-xs font-medium text-slate-300 mb-6">
+        <span class="w-2 h-2 rounded-full bg-breos animate-pulse"></span>
+        Arquitetura de Plataforma Nível 5 (Optimized) • Go 1.22
+      </div>
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-6">
+        <span class="gradient-text">Engineering Intelligence</span><br>
+        para Humanos e Agentes de IA
+      </h1>
+      <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto font-light leading-relaxed mb-10">
+        O BREoS é uma meta-arquitetura viva que integra runtime determinístico em Go, orquestração de 27 ferramentas canônicas via Model Context Protocol (MCP), Digital Twin de base de código e governança constitucional com aprovação humana de Nível 2.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+        <a href="./PORTFOLIO_CASE_STUDY.md" class="px-6 py-3.5 rounded-xl bg-breos hover:bg-breos-light text-slate-950 font-bold transition shadow-lg shadow-breos/20 flex items-center gap-2">
+          <span>Ler Case Study Técnico</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+        <a href="#mcp-tools" class="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-medium border border-slate-700 transition">
+          Ver Catálogo de 27 Ferramentas MCP
+        </a>
+      </div>
+
+      <!-- Hard Metrics Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        <div class="glass p-5 rounded-2xl text-left border border-slate-800">
+          <div class="text-xs font-mono uppercase text-slate-500 mb-1">M3 • Context Waste</div>
+          <div class="text-3xl font-extrabold text-breos font-mono">0.00%</div>
+          <div class="text-xs text-slate-400 mt-1">Hard Gate ≤ 30% Superado</div>
+        </div>
+        <div class="glass p-5 rounded-2xl text-left border border-slate-800">
+          <div class="text-xs font-mono uppercase text-slate-500 mb-1">M2 • Context Cost</div>
+          <div class="text-3xl font-extrabold text-white font-mono">2,597</div>
+          <div class="text-xs text-slate-400 mt-1">Tokens médios / execução</div>
+        </div>
+        <div class="glass p-5 rounded-2xl text-left border border-slate-800">
+          <div class="text-xs font-mono uppercase text-slate-500 mb-1">M11 • Retrieval NDCG@5</div>
+          <div class="text-3xl font-extrabold text-breos font-mono">1.000</div>
+          <div class="text-xs text-slate-400 mt-1">12/12 Queries canônicas</div>
+        </div>
+        <div class="glass p-5 rounded-2xl text-left border border-slate-800">
+          <div class="text-xs font-mono uppercase text-slate-500 mb-1">MCP Tools Canônicas</div>
+          <div class="text-3xl font-extrabold text-white font-mono">27</div>
+          <div class="text-xs text-slate-400 mt-1">100% Paridade (GATE-03)</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Architecture Explorer -->
+  <section id="architecture" class="py-20 px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold tracking-tight text-white mb-3">Topologia Arquitetural em 4 Camadas</h2>
+      <p class="text-slate-400 text-sm max-w-2xl mx-auto">
+        Composição desacoplada garantindo que a experiência do usuário orquestre jornadas sem contaminação funcional dos domínios centrais.
+      </p>
+    </div>
+
+    <!-- Tabs Navigation -->
+    <div class="flex flex-wrap justify-center gap-2 mb-8">
+      <button onclick="switchTab('experience')" id="tab-btn-experience" class="px-5 py-2.5 rounded-xl font-medium text-sm transition bg-breos text-slate-950 font-bold">
+        Experience Layer (XE)
+      </button>
+      <button onclick="switchTab('cognitive')" id="tab-btn-cognitive" class="px-5 py-2.5 rounded-xl font-medium text-sm transition bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700">
+        Cognitive Domain (Brain)
+      </button>
+      <button onclick="switchTab('knowledge')" id="tab-btn-knowledge" class="px-5 py-2.5 rounded-xl font-medium text-sm transition bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700">
+        Knowledge & Digital Twin
+      </button>
+      <button onclick="switchTab('runtime')" id="tab-btn-runtime" class="px-5 py-2.5 rounded-xl font-medium text-sm transition bg-slate-800/80 text-slate-300 hover:text-white border border-slate-700">
+        Go Runtime & MCP Server
+      </button>
+    </div>
+
+    <!-- Tab Contents -->
+    <div class="glass rounded-2xl p-8 border border-slate-800">
+      <div id="tab-content-experience" class="block">
+        <div class="flex items-start justify-between mb-4">
+          <div>
+            <span class="px-2.5 py-1 rounded bg-breos/20 text-breos border border-breos/30 text-xs font-mono font-semibold">ADR-0114 • Constitutional Meta-Architecture</span>
+            <h3 class="text-2xl font-bold text-white mt-2">Experience Layer (Cross-Cutting Meta Architecture)</h3>
+          </div>
+        </div>
+        <p class="text-slate-300 leading-relaxed mb-6">
+          A Experience Layer <strong>não é um domínio funcional</strong> — ela não implementa capacidades nem executa lógica de negócio. Sua função é orquestrar a percepção, preservar o contexto cognitivo entre sessões consecutivas de humanos e agentes de IA, e adaptar interações aos diferentes perfis de maturidade de engenharia.
+        </p>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="text-breos font-semibold mb-1">Preservação de Contexto</div>
+            <p class="text-xs text-slate-400">Mantém histórico de raciocínio e intenções sem sobrecarregar a memória operacional.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="text-breos font-semibold mb-1">Adaptação Cognitiva</div>
+            <p class="text-xs text-slate-400">Alterna dinamicamente entre modos Beginner, Intermediate e Staff conforme o feedback.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+            <div class="text-breos font-semibold mb-1">Independência de LLM</div>
+            <p class="text-xs text-slate-400">Zero acoplamento a provedores proprietários de modelos de linguagem.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-content-cognitive" class="hidden">
+        <span class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-400 border border-sky-500/30 text-xs font-mono font-semibold">Goal Resolver & EPS Planner</span>
+        <h3 class="text-2xl font-bold text-white mt-2">Cognitive Domain</h3>
+        <p class="text-slate-300 leading-relaxed mb-6">
+          Transforma intenções humanas em linguagem natural em <strong>Execution Plan Specifications (EPS)</strong> executáveis. O princípio fundamental é <em>Goal First, Commands Second</em>: o desenvolvedor ou agente declara o objetivo, e o motor de cognição decompõe a tarefa em um Grafo Acíclico Dirigido (DAG) validado.
+        </p>
+      </div>
+
+      <div id="tab-content-knowledge" class="hidden">
+        <span class="px-2.5 py-1 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-mono font-semibold">Semantic Graph & Digital Twin</span>
+        <h3 class="text-2xl font-bold text-white mt-2">Knowledge Platform & Digital Twin</h3>
+        <p class="text-slate-300 leading-relaxed mb-6">
+          O BREoS mantém um modelo vivo da base de código através do pipeline de descoberta contínua. As buscas semânticas alcançam <strong>NDCG@5 = 1.000</strong> através de sumarização otimizada, eliminando o ruído que causaria alucinações em agentes de IA.
+        </p>
+      </div>
+
+      <div id="tab-content-runtime" class="hidden">
+        <span class="px-2.5 py-1 rounded bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs font-mono font-semibold">Go 1.22 • Canonical Engine</span>
+        <h3 class="text-2xl font-bold text-white mt-2">Runtime Domain & MCP Engine</h3>
+        <p class="text-slate-300 leading-relaxed mb-6">
+          Implementado inteiramente em Go nativo, operando com latência ultrabaixa. O servidor despacha as 27 ferramentas canônicas pelo ponto único de despacho <code>dispatchTool</code>, impondo controles de autorização e medição de orçamento de tokens a cada requisição JSON-RPC.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive 27 MCP Tools Explorer -->
+  <section id="mcp-tools" class="py-20 px-6 max-w-6xl mx-auto border-t border-borderCol">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+      <div>
+        <h2 class="text-3xl font-bold tracking-tight text-white mb-2">As 27 Ferramentas Canônicas do MCP</h2>
+        <p class="text-slate-400 text-sm">Explorador de ferramentas despacháveis via Model Context Protocol em Go.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <input type="text" id="tool-search" placeholder="Filtrar ferramenta..." onkeyup="filterTools()" class="bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-breos transition">
+      </div>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <button onclick="setCategoryFilter('all')" class="cat-pill active px-3 py-1.5 rounded-lg text-xs font-medium bg-breos text-slate-950 font-bold transition">Todas (27)</button>
+      <button onclick="setCategoryFilter('discovery')" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white transition">Discovery & Health</button>
+      <button onclick="setCategoryFilter('planning')" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white transition">Planning & Guides</button>
+      <button onclick="setCategoryFilter('lifecycle')" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white transition">Lifecycle Execution</button>
+      <button onclick="setCategoryFilter('governance')" class="cat-pill px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 hover:text-white transition">Governance & Approvals</button>
+    </div>
+
+    <!-- Tools Grid -->
+    <div id="tools-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Tool items rendered via JS -->
+    </div>
+  </section>
+
+  <!-- Context Budgeting Comparison Section -->
+  <section id="budget" class="py-20 px-6 max-w-6xl mx-auto border-t border-borderCol">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold tracking-tight text-white mb-3">Context Budgeting vs Prompt Dumping</h2>
+      <p class="text-slate-400 text-sm max-w-2xl mx-auto">
+        Como o BREoS eliminou o desperdício de tokens de contexto (M3 = 0.00%) enquanto ferramentas tradicionais de IA sofrem com saturação de memória e alucinações.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Traditional Way -->
+      <div class="glass p-6 rounded-2xl border border-rose-500/20 bg-rose-950/10">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-rose-400 font-bold text-sm uppercase font-mono">Abordagem Convencional de IA</span>
+          <span class="px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 text-xs">Prompt Dumping</span>
+        </div>
+        <div class="text-2xl font-bold text-white mb-2">15.000 – 40.000 tokens</div>
+        <p class="text-xs text-slate-400 mb-6">Carrega o repositório inteiro sem filtro, misturando arquivos irrelevantes.</p>
+        <ul class="space-y-3 text-sm text-slate-300">
+          <li class="flex items-start gap-2">
+            <span class="text-rose-500">✕</span>
+            <span><strong>Context Waste alto (> 75%):</strong> A maior parte dos tokens pagos é descartada pelo modelo sem uso.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-rose-500">✕</span>
+            <span><strong>Degradação de Atenção:</strong> "Needle in a haystack" — o LLM esquece instruções críticas perdidas no meio do prompt.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-rose-500">✕</span>
+            <span><strong>Custo Financeiro e Latência:</strong> Respostas lentas e faturas elevadas de inferência.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- BREoS Way -->
+      <div class="glass p-6 rounded-2xl border border-breos/30 bg-breos/5 glow-effect">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-breos font-bold text-sm uppercase font-mono">Arquitetura BREoS (L5-OPTIMIZE-01)</span>
+          <span class="px-2 py-0.5 rounded bg-breos/20 text-breos text-xs">Marginal Utility Selection</span>
+        </div>
+        <div class="text-2xl font-bold text-white mb-2">2.597 tokens <span class="text-xs font-normal text-slate-400 font-mono">(M2 medido)</span></div>
+        <p class="text-xs text-slate-400 mb-6">Injeção cirúrgica de contexto com medição em tempo real e utilidade marginal.</p>
+        <ul class="space-y-3 text-sm text-slate-300">
+          <li class="flex items-start gap-2">
+            <span class="text-breos font-bold">✓</span>
+            <span><strong>0.00% Context Waste (M3):</strong> Todos os tokens injetados contribuem diretamente para a resolução do objetivo.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-breos font-bold">✓</span>
+            <span><strong>Atenção Máxima do Modelo:</strong> Foco total em contratos, interfaces e critérios de aceite.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="text-breos font-bold">✓</span>
+            <span><strong>Hard Gate de CI:</strong> Bloqueia builds se o desperdício de tokens ultrapassar 30%.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Governance & Level 5 Scorecard -->
+  <section id="metrics" class="py-20 px-6 max-w-6xl mx-auto border-t border-borderCol">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold tracking-tight text-white mb-3">Governança Constitucional & Rigor Empírico</h2>
+      <p class="text-slate-400 text-sm max-w-2xl mx-auto">
+        No BREoS, nenhuma métrica existe sem fórmula, threshold, owner instrumentado e evidência reproduzível no CI.
+      </p>
+    </div>
+
+    <div class="overflow-x-auto glass rounded-2xl border border-slate-800">
+      <table class="w-full text-left text-sm text-slate-300">
+        <thead class="bg-slate-900/80 text-xs font-mono uppercase text-slate-400 border-b border-slate-800">
+          <tr>
+            <th class="p-4">Métrica / Gate</th>
+            <th class="p-4">Definição</th>
+            <th class="p-4">Target Mandatório</th>
+            <th class="p-4">Resultado Medido</th>
+            <th class="p-4">Status</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800 font-mono text-xs">
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">M2 — Context Cost</td>
+            <td class="p-4 font-sans text-slate-400">Tokens médios de entrada carregados por execução</td>
+            <td class="p-4">≤ 5,000 tokens</td>
+            <td class="p-4 text-white font-bold">2,597 tokens</td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded bg-breos/20 text-breos font-sans font-bold">Aprovado</span></td>
+          </tr>
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">M3 — Context Waste</td>
+            <td class="p-4 font-sans text-slate-400">Proporção de contexto carregado e não aproveitado</td>
+            <td class="p-4">≤ 30%</td>
+            <td class="p-4 text-breos font-bold">0.00%</td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded bg-breos/20 text-breos font-sans font-bold">Hard Gate Superado</span></td>
+          </tr>
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">M11 — Knowledge NDCG@5</td>
+            <td class="p-4 font-sans text-slate-400">Qualidade de ranking na recuperação de conhecimento</td>
+            <td class="p-4">≥ 0.80</td>
+            <td class="p-4 text-breos font-bold">1.000</td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded bg-breos/20 text-breos font-sans font-bold">Perfeito (12/12)</span></td>
+          </tr>
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">GATE-03 — Tool Parity</td>
+            <td class="p-4 font-sans text-slate-400">Paridade estrita entre descoberta e execução no MCP</td>
+            <td class="p-4">100% sincronizado</td>
+            <td class="p-4 text-white font-bold">27 / 27 tools</td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded bg-breos/20 text-breos font-sans font-bold">Garantido por CI</span></td>
+          </tr>
+          <tr class="hover:bg-slate-800/30">
+            <td class="p-4 font-semibold text-white">GATE-05 — Level 2 Approvals</td>
+            <td class="p-4 font-sans text-slate-400">Bloqueio mandatória de ações críticas sem decisão humana</td>
+            <td class="p-4">100% interceptação</td>
+            <td class="p-4 text-white font-bold">Interceptor ativo</td>
+            <td class="p-4"><span class="px-2 py-0.5 rounded bg-breos/20 text-breos font-sans font-bold">Ativo</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-6 border-t border-borderCol text-center text-slate-500 text-sm">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <p class="text-slate-400 font-medium">BREoS — Engineering Intelligence Platform</p>
+        <p class="text-xs text-slate-600 mt-1">Showcase de Arquitetura & Portfólio de Engenharia de Sistemas.</p>
+      </div>
+      <div class="flex items-center gap-6 text-xs text-slate-400">
+        <a href="./PORTFOLIO_CASE_STUDY.md" class="hover:text-breos transition">Case Study</a>
+        <a href="./docs/MCP_TOOLS_CATALOG.md" class="hover:text-breos transition">MCP Tools</a>
+        <a href="./docs/ARCHITECTURE.md" class="hover:text-breos transition">Arquitetura</a>
+        <a href="https://github.com/BRSmartList/BREosPub" target="_blank" class="hover:text-breos transition">GitHub Repo</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script for Tool Data & Interactivity -->
+  <script>
+    const toolsData = [
+      { name: "breos_analyze", cat: "discovery", desc: "Análise profunda de arquitetura, dependências, riscos e débitos técnicos a partir do Digital Twin." },
+      { name: "breos_adaptive", cat: "planning", desc: "Execução de missões adaptativas que se ajustam ao perfil do usuário e progresso acumulado." },
+      { name: "breos_approval_list", cat: "governance", desc: "Lista RFCs pendentes que requerem aprovação e decisão humana de Nível 2." },
+      { name: "breos_approve", cat: "governance", desc: "Aprova ou rejeita uma ação de Nível 2 exigindo decisão humana explícita." },
+      { name: "breos_bootstrap", cat: "lifecycle", desc: "Executa ciclo bootstrap recursivo: varre ADRs, ingere estratégias e gera RFCs automaticamente." },
+      { name: "breos_discover", cat: "discovery", desc: "Executa pipeline Discover: detecta stacks, frameworks, arquitetura e gera o Digital Twin." },
+      { name: "breos_evolve", cat: "governance", desc: "Orquestra a evolução contínua pós-certificação (analisa propostas, aprovações e backlog)." },
+      { name: "breos_execute", cat: "lifecycle", desc: "Executa um Plano através do ciclo completo: Loading → Execution → Validation → Audit." },
+      { name: "breos_explain", cat: "discovery", desc: "Explica adaptativamente padrões detectados, decisões arquiteturais ou módulos do repositório." },
+      { name: "breos_generate_spec", cat: "governance", desc: "Gera uma Especificação Técnica formal a partir de uma ADR aprovada." },
+      { name: "breos_guide", cat: "planning", desc: "Roteador de intenção para comandos ('Goal First, Commands Second'). Mapeia metas para tools." },
+      { name: "breos_health", cat: "discovery", desc: "Exibe indicadores de saúde e débitos técnicos da base de código via Digital Twin." },
+      { name: "breos_help", cat: "planning", desc: "Ajuda e documentação interativa sobre comandos e conceitos da plataforma." },
+      { name: "breos_implement", cat: "lifecycle", desc: "Decompõe os critérios de aceite de uma Especificação em tarefas ordenadas." },
+      { name: "breos_init", cat: "lifecycle", desc: "Inicializador guiado de novos projetos com perfis de engenharia em português." },
+      { name: "breos_intelligence", cat: "lifecycle", desc: "Analisa telemetria de execuções anteriores, calcula KPIs e gera insights de melhoria." },
+      { name: "breos_learn", cat: "planning", desc: "Modo de aprendizado interativo para explorar a arquitetura sem atrito." },
+      { name: "breos_list", cat: "planning", desc: "Lista componentes registrados na plataforma por tipo (command, profile, capability)." },
+      { name: "breos_next", cat: "planning", desc: "Sugere as próximas tarefas prioritárias com base nas lacunas do Digital Twin." },
+      { name: "breos_plan", cat: "planning", desc: "Gera um Plano de Execução (EPS) a partir de um objetivo, considerando restrições de contexto." },
+      { name: "breos_propose", cat: "governance", desc: "Cria uma nova RFC (Request for Comments) para uma mudança arquitetural." },
+      { name: "breos_publish", cat: "lifecycle", desc: "Publica conhecimento técnico extraído do Digital Twin na documentação e contexto de IA." },
+      { name: "breos_roadmap", cat: "planning", desc: "Gera roadmap priorizado com horizontes temporais para evolução da plataforma." },
+      { name: "breos_status", cat: "lifecycle", desc: "Status do runtime Go: versão, componentes carregados, uptime e sessões ativas." },
+      { name: "breos_validate", cat: "governance", desc: "Valida uma implementação contra sua Especificação e gera relatório de certificação." },
+      { name: "breos_welcome", cat: "planning", desc: "First Run Experience com boas-vindas e detecção de primeiro uso do projeto." },
+      { name: "breos_workspace", cat: "discovery", desc: "Detecta contexto do workspace: plataforma interna, projeto consumidor ou workspace externo." }
+    ];
+
+    let currentCategory = 'all';
+
+    function renderTools() {
+      const container = document.getElementById('tools-container');
+      const searchTerm = document.getElementById('tool-search').value.toLowerCase();
+      container.innerHTML = '';
+
+      const filtered = toolsData.filter(t => {
+        const matchesCat = currentCategory === 'all' || t.cat === currentCategory;
+        const matchesSearch = t.name.toLowerCase().includes(searchTerm) || t.desc.toLowerCase().includes(searchTerm);
+        return matchesCat && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="col-span-full py-8 text-center text-slate-500 font-mono text-sm">Nenhuma ferramenta encontrada para a busca.</div>';
+        return;
+      }
+
+      filtered.forEach(tool => {
+        const card = document.createElement('div');
+        card.className = 'glass p-5 rounded-xl border border-slate-800/80 hover:border-breos/40 transition flex flex-col justify-between';
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-sm font-bold text-breos">${tool.name}</span>
+              <span class="text-[10px] uppercase font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-400">${tool.cat}</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">${tool.desc}</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/50 flex items-center justify-between text-[11px] font-mono text-slate-500">
+            <span>Canonical MCP</span>
+            <span class="text-breos">GATE-03 Parity ✓</span>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function filterTools() {
+      renderTools();
+    }
+
+    function setCategoryFilter(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.classList.remove('bg-breos', 'text-slate-950', 'font-bold');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      });
+      event.target.classList.remove('bg-slate-800', 'text-slate-300');
+      event.target.classList.add('bg-breos', 'text-slate-950', 'font-bold');
+      renderTools();
+    }
+
+    function switchTab(tab) {
+      ['experience', 'cognitive', 'knowledge', 'runtime'].forEach(t => {
+        document.getElementById(`tab-content-${t}`).classList.add('hidden');
+        document.getElementById(`tab-btn-${t}`).classList.remove('bg-breos', 'text-slate-950', 'font-bold');
+        document.getElementById(`tab-btn-${t}`).classList.add('bg-slate-800/80', 'text-slate-300');
+      });
+      document.getElementById(`tab-content-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-btn-${tab}`).classList.remove('bg-slate-800/80', 'text-slate-300');
+      document.getElementById(`tab-btn-${tab}`).classList.add('bg-breos', 'text-slate-950', 'font-bold');
+    }
+
+    // Initial render
+    renderTools();
+  </script>
+</body>
+</html>
